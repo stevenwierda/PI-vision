@@ -12,10 +12,13 @@ def parser():
     parser.add_argument("--username", type=str, help="username for the PLC", default="admin")
     return parser.parse_args()
 
+
 def main(args):
     imageGetter = imageAccusition(args)
-    img = imageAccusition.getImage()
-    cv2.imwrite("/Images/CameraImage.png",img)
+    img = imageGetter.getImage()
+    #images = cv2.threshold(img, 0, 255, cv2.THRESH_OTSU + cv2.THRESH_BINARY)
+
+    cv2.imwrite("brix040.png", img)
 
 
 if __name__ == '__main__':
