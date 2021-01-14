@@ -1,6 +1,7 @@
 import argparse
 # from imageGetter.imageAccusition import imageAccusitionCamera
 from imageGetter.imageAccusition import imageAccusitionFile
+from imageSaver.saver import Saver
 from communication.OPC import OPC
 import cv2
 import numpy as np
@@ -55,17 +56,17 @@ def imageOperations(args, img):
 
 
 def main(args):
-    """imageGetter = getImageMethode(args)
+    opc = OPC(args)
+    imageGetter = getImageMethode(args)
     imageSaver = Saver(args)
     for i in range(0, len(imageGetter.selec_img)):
         img = imageGetter.load_img(i)
         img = imageGetter.RGB_TO_HSI(img, i)
         img, brightness = imageOperations(args, img)
         print("the brightness = ", brightness)
-        imageSaver.SaveNPY(img, i)"""
-    opc = OPC(args)
-    opc.setValue("ns=4;",4)
-
+        imageSaver.SaveNPY(img, i)
+    opc.setValue("ns=4;s=Arp.Plc.Eclr/refratoreadout1.OPCvalue", 3)
+    opc.disconnect()
     # images = cv2.threshold(img, 0, 255, cv2.THRESH_OTSU + cv2.THRESH_BINARY)
 
 
