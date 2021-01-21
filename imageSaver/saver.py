@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import os
 
 
 class Saver:
@@ -11,9 +12,9 @@ class Saver:
         cv2.imwrite(name, img)
 
     def SaveNPY(self, img, i):
-        # name = input("enter file name")
-        name = "test" + str(i)
-        np.save("C:\\Users\\steve\\OneDrive\\Documents\\GitHub\\PI-vision\\Images\\" + name + ".npy", img)
+        #name = input("enter file name")
+        name = "edge" + str(i)
+        np.save("C:\\Users\\Steven\\Documents\\PI\\vision\\PI-vision\\Images\\dataset2\\" + name + ".npy", img)
 
     def imageCropper(self, img):
         y = img.shape[1]

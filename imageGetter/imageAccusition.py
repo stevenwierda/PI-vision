@@ -18,7 +18,7 @@ import math
         img = self.cameraArray.array
         return img"""
 
-class imageAccusitionFile():
+class imageAccusitionPNG():
     def __init__(self, args):
         self.args = args
         self.imgPath = os.path.join(self.args.datasetLocation)
@@ -38,7 +38,12 @@ class imageAccusitionFile():
         print("\nNumber of images to be processed in is: {:d}".format(len(self.selec_img)))
 
     def __getitem__(self, index):
-        img = self.load_img(index)
+        if self.args.getImageFileFormat == "NPY":
+            img = self.load_npy(index)
+        elif self.args.getImageFileFormat == "png":
+            img = self.load_img(index)
+        else:
+            raise Exception("wrong data type")
         return img
 
     def load_npy(self, index):
@@ -49,8 +54,12 @@ class imageAccusitionFile():
         return img
 
     def load_img(self, index):
-        img = cv2.cvtColor(cv2.imread(self.selec_img[index]), cv2.COLOR_BGR2RGB)
-        cv2
+        if self.args.clrSpec == "RGB":
+            img = cv2.cvtColor(cv2.imread(self.selec_img[index]), cv2.COLOR_BGR2RGB)
+        elif self.args.clrSpec == "HSI":
+            img = cv2.cvtColor(cv2.imread(self.selec_img[index]), cv2.COLOR_BGR2HLS)
+        else:
+            raise Exception("unknown colour spectrum")
         print("this is the shape of the image", img.shape)
         return img
 
