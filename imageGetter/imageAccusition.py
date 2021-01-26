@@ -1,5 +1,5 @@
-"""from picamera import PiCamera
-from picamera.array import PiRGBArray"""
+from picamera import PiCamera
+from picamera.array import PiRGBArray
 
 import numpy as np
 import os
@@ -7,7 +7,7 @@ import cv2
 import math
 
 
-"""class imageAccusitionCamera():
+class imageAccusitionCamera():
     def __init__(self, args):
         self.camera = PiCamera()
         #self.camera.resolution(200, 200)
@@ -16,7 +16,7 @@ import math
     def __getitem__(self):
         self.camera.capture(self.cameraArray, format="bgr")
         img = self.cameraArray.array
-        return img"""
+        return img
 
 class imageAccusitionPNG():
     def __init__(self, args):

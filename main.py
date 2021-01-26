@@ -1,8 +1,8 @@
 import argparse
-#from imageGetter.imageAccusition import imageAccusitionCamera
+
 from Operations.brightness import HSItest
 from Operations.edge import edgeLocation
-from imageGetter.imageAccusition import imageAccusitionPNG
+from imageGetter.imageAccusition import imageAccusitionPNG, imageAccusitionCamera
 from imageSaver.saver import Saver
 from communication.OPC import OPC
 import cv2
@@ -53,8 +53,8 @@ def parser():
 def getImageMethode(args):
     if args.getImageMethode == "file":
         imageGetter = imageAccusitionPNG(args)
-    # elif args.getImageMethode == "camera":
-    # imageGetter = imageAccusitionCamera(args)
+    elif args.getImageMethode == "camera":
+        imageGetter = imageAccusitionCamera(args)
     else:
         raise Exception('Unknown framework (image)')
     return imageGetter
@@ -74,14 +74,21 @@ def main(args):
     opc = OPC(args)
     imageGetter = getImageMethode(args)
     imageSaver = Saver(args)
-    for i in range(0, len(imageGetter.selec_img)):
-        img = imageGetter.load_img(i)
-        img, value = imageOperations(args, img)
-        print("the value = ", value)
-        imageSaver.SaveNPY(img, i)
-        opc.setValue("ns=4;s=Arp.Plc.Eclr/refratoreadout1.OPCvalue", value)
+    if args.getImageMethode == "file":
+        for i in range(0, len(imageGetter.selec_img)):
+            img = imageGetter
+            img, value = imageOperations(args, img)
+            print("the value = ", value)
+            imageSaver.SaveNPY(img, i)
+            opc.setValue("ns=4;s=Arp.Plc.Eclr/refratoreadout1.OPCvalue", value)
+        # images = cv2.threshold(img, 0, 255, cv2.THRESH_OTSU + cv2.THRESH_BINARY)
+    elif args.getImageMethode == "camera":
+        while True:
+            img = imageGetter
+            img, value = imageOperations(args, img)
+            imageSaver.SaveNPY(img, 1)
+            opc.setValue("ns=4;s=Arp.Plc.Eclr/refratoreadout1.OPCvalue", value)
     opc.disconnect()
-    # images = cv2.threshold(img, 0, 255, cv2.THRESH_OTSU + cv2.THRESH_BINARY)
 
 
 

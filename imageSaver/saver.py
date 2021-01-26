@@ -12,8 +12,8 @@ class Saver:
         cv2.imwrite(name, img)
 
     def SaveNPY(self, img, i):
-        #name = input("enter file name")
-        name = "edge" + str(i)
+        name = input("enter file name")
+        #name = "edge" + str(i)
         np.save("C:\\Users\\Steven\\Documents\\PI\\vision\\PI-vision\\Images\\dataset2\\" + name + ".npy", img)
 
     def imageCropper(self, img):

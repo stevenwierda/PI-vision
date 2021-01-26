@@ -13,7 +13,7 @@ class OPC():
 
     def setValue(self, node, value):
         self.node = self.client.get_node(node)
-        dv = ua.DataValue(ua.Variant(value, ua.VariantType.Int16))
+        dv = ua.DataValue(ua.Variant(value, ua.VariantType.Float))
         dv.ServerTimestamp = None
         dv.SourceTimestamp = None
         self.node.set_value(dv)
